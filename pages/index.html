@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Hello Express!</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <h1>Hello Express!</h1>
-    <p>Showing <code>pages/index.html</code></p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>ENV Variable API</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Check the console for API response!</h1>
+
+  <script>
+    fetch('/api/data')
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.error("Error fetching data:", err));
+  </script>
+</body>
 </html>

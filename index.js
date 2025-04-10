@@ -1,15 +1,37 @@
+// index.js
+
 const express = require('express');
-const { resolve } = require('path');
+const path = require('path');
+require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
-const port = 3010;
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static('static'));
+// Serve static files like CSS
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
+// Serve HTML file
 app.get('/', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/index.html'));
+  res.sendFile(path.join(__dirname, 'pages', 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+// API route returning data based on ENV variable
+app.get('/api/data', (req, res) => {
+  const isAdmin = process.env.IS_ADMIN === 'true';
+
+  if (isAdmin) {
+    res.json({
+      message: "Welcome, Admin!",
+      data: ["Admin Data 1", "Admin Data 2"]
+    });
+  } else {
+    res.json({
+      message: "Welcome, User!",
+      data: ["User Data 1", "User Data 2"]
+    });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
